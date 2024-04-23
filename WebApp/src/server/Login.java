@@ -13,7 +13,7 @@ public class Login {
 		Manipula dados = new Manipula(new Configura());
 		
 		ResultSet rs = dados.getResultado("SELECT id_jogador FROM jogador"
-				+ " WHERE username = '" + username + "' AND password = '" + password + "';");
+				+ " WHERE username = '" + username + "' AND hash_password = '" + password + "';");
 		
 		boolean resultado = false;
 		

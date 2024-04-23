@@ -44,11 +44,35 @@ public class Client {
 			// Stream para leitura do socket
 			is = new ObjectInputStream(socket.getInputStream());
 			
+			// Scanner for user input
+            Scanner scanner = new Scanner(System.in);
+            
+			// Mensagem com informação sobre a vez de jogar, tabuleiro ou fim de jogo
+			String status = (String) is.readObject();
+			System.out.println(status);
+			
+			if(status.startsWith("Escolha:")) {
+			
+				int choice = 0;
+				
+				while(choice != 1 && choice != 2) {
+					choice = scanner.nextInt();
+	    			
+	    			if(choice != 1 && choice != 2) {
+	    				System.out.println("Valor inválido. Introduza 1 para jogar contra outro jogador, 2 para jogar contra um bot");
+	    			}
+	    			
+	    			else {
+	    				os.writeObject(choice);
+	    			}
+				}
+			}
+			
 			String username = "";
 			String password = "";
 			boolean success = false;
 			
-			while(username.equals("") || password.equals("") || !success) {
+			while(username.equals("") && password.equals("") && !success) {
 				
 				// Pede os credenciais de login
 				String[] credenciais = LoginClient.inputLogin();
@@ -68,10 +92,7 @@ public class Client {
     				success = true;
     			}
 			}
-			
-            // Scanner for user input
-            Scanner scanner = new Scanner(System.in);
-            
+
             int maxInput = (int) is.readObject();
             
             // Receive and display the current board from the server
@@ -83,7 +104,7 @@ public class Client {
             while (!endGame) {
             	
             	// Mensagem com informação sobre a vez de jogar, tabuleiro ou fim de jogo
-    			String status = (String) is.readObject();
+    			status = (String) is.readObject();
     			System.out.println(status);
     			
     			

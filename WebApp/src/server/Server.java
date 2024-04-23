@@ -16,6 +16,7 @@ public class Server {
 	public final static int DEFAULT_PORT = 5025;
 	public static int gameID = 0;
 
+	/*
 	public static void main(String[] args) {
 		ServerSocket serverSocket = null;
 
@@ -44,6 +45,72 @@ public class Server {
 			System.err.println("Excepção no servidor: " + e);
 		}
 	}
+	*/
+	
+	public static void main(String[] args) {
+		ServerSocket serverSocket = null;
+
+		try {
+			serverSocket = new ServerSocket(DEFAULT_PORT);
+
+			Socket newSock1 = null;
+			Socket newSock2 = null;
+			
+			while (true) {
+			
+				// Wait for a player to connect
+	            newSock1 = serverSocket.accept();
+	            System.out.println("Nova ligação recebida: " + newSock1);
+				
+	            // Send a message to the client asking for their choice
+	            ObjectOutputStream os1 = new ObjectOutputStream(newSock1.getOutputStream());
+	            os1.writeObject("Escolha: 1 para jogar contra outro jogador, 2 para jogar contra um bot");
+	
+	            // Receive choice from the client
+	            ObjectInputStream is1 = new ObjectInputStream(newSock1.getInputStream());
+	            int choice = (int) is1.readObject();
+	            
+	            System.out.println("choice: " + choice);
+	
+	            // Handle the choice
+	            if (choice == 1) {
+	
+					// Espera do Jogador2 entrar
+					System.out.println("Espero pelo Jogador 2");
+					newSock2 = serverSocket.accept();
+					
+		            // Send a message to the client asking for their choice
+					ObjectInputStream is2 = new ObjectInputStream(newSock2.getInputStream());
+
+		            ObjectOutputStream os2 = new ObjectOutputStream(newSock2.getOutputStream());
+		            os2.writeObject("Oponente encontrado!");
+
+	                // Opponent is waiting, start the game
+	                Thread t = new HandleConnectionThread(newSock1, newSock2, is1, os1, is2, os2);
+	                t.start();
+	                System.out.println("Começou o jogo: " + gameID);
+	                gameID++;
+	            }
+	            else if (choice == 2) {
+	                // Player wants to play against a bot
+	                Thread t = new HandleConnectionThreadWithBot(newSock1, is1, os1);
+	                t.start();
+	                System.out.println("Começou o jogo com bot: " + gameID);
+	                gameID++;
+	                
+
+	            } else {
+	                // Invalid choice
+	                os1.writeObject("Escolha inválida. Encerrando ligação.");
+	                newSock1.close();
+	            }
+			}
+            
+        
+		} catch (IOException | ClassNotFoundException e) {
+			System.err.println("Excepção no servidor: " + e);
+		}	
+	}
 }
 
 class HandleConnectionThread extends Thread {
@@ -52,6 +119,10 @@ class HandleConnectionThread extends Thread {
 
 	private Socket connection1;
 	private Socket connection2;
+    private ObjectInputStream is1;
+    private ObjectOutputStream os1;
+    private ObjectInputStream is2;
+    private ObjectOutputStream os2;
 	private int gameID = Server.gameID;
 	// Variáveis do jogo
 
@@ -59,29 +130,23 @@ class HandleConnectionThread extends Thread {
 	char player2piece = 'O';
 	char winner = '-'; // variável atualizada para X ou O consoante o vencedor
 
-	public HandleConnectionThread(Socket connection1, Socket connection2) {
+	public HandleConnectionThread(Socket connection1, Socket connection2, ObjectInputStream is1, ObjectOutputStream os1, ObjectInputStream is2, ObjectOutputStream os2) {
 		this.connection1 = connection1;
 		this.connection2 = connection2;
+        this.is1 = is1;
+        this.os1 = os1;
+        this.is2 = is2;
+        this.os2 = os2;
 	}
 	
 	public void run() {
-
-		ObjectInputStream is1 = null;
-		ObjectOutputStream os1 = null;
-
-		ObjectInputStream is2 = null;
-		ObjectOutputStream os2 = null;
 
 		try {
 			// circuito virtual estabelecido: socket cliente na variavel newSock
 			System.out.println("\nThread do Jogo: " + this.getId() + ", " + connection1.getRemoteSocketAddress() + ", "
 					+ connection2.getRemoteSocketAddress());
 			System.out.println("Game ID: " + gameID);
-			is1 = new ObjectInputStream(connection1.getInputStream());
-			os1 = new ObjectOutputStream(connection1.getOutputStream());
 
-			is2 = new ObjectInputStream(connection2.getInputStream());
-			os2 = new ObjectOutputStream(connection2.getOutputStream());
 
 			// inicio do jogo
 			Boolean success = false;
@@ -92,7 +157,6 @@ class HandleConnectionThread extends Thread {
 			while(!successLogin1 || !successLogin2) {
 				
 				if(!successLogin1) {
-			        // Receive row and column from player 1
 			        String username = (String) is1.readObject();
 			        String password = (String) is1.readObject();
 			        
@@ -111,7 +175,6 @@ class HandleConnectionThread extends Thread {
 				}
 				
 				if(!successLogin2) {
-			        // Receive row and column from player 1
 			        String username = (String) is2.readObject();
 			        String password = (String) is2.readObject();
 			        
@@ -144,13 +207,14 @@ class HandleConnectionThread extends Thread {
 
 			while (!endGame) {
 				
-				// receber jogada player1
+				os2.writeObject("Aguarde pela jogada do oponente");
+				
+				// jogada do jogador 1
 				while (!success) {
 					
 					os1.writeObject("É a sua vez de jogar");
-					os2.writeObject("Aguarde pela jogada do oponente");
-					
-			        // Receive row and column from player 1
+
+					// Recebe a linha e a coluna da jogada do jogador 2
 			        int row = (int) is1.readObject();
 			        int col = (int) is1.readObject();
 			        
@@ -165,19 +229,16 @@ class HandleConnectionThread extends Thread {
 			            os1.writeObject("Jogou na linha " + row + " e na coluna "+  col);
 			            os2.writeObject("Oponente jogou na linha " + row + " e na coluna "+  col);
 			            
-			            System.out.println("valid play 1");
-			            
+						// Verificar fim do jogo
+						if(game.checkEnd(row, col, player1piece)) {
+							endGame = true;
+							winner = game.winner;
+						}
 
 			        } else {
 			            // If invalid, ask for another input
 			            os1.writeObject("Já existe uma peça na casa introduzida. Introduza uma jogada numa casa vazia");
 			        }
-					
-					// Verificar fim do jogo
-					if(game.checkEnd(row, col, player1piece)) {
-						endGame = true;
-						winner = game.winner;
-					}
 				}
 				
 				success = false;
@@ -193,14 +254,15 @@ class HandleConnectionThread extends Thread {
 
 				if (!endGame) {
 					
-					// receber jogada jogador2
+					os1.writeObject("Aguarde pela jogada do oponente");
+					
+					// jogada do jogador 2
 					while (!success) {
 						
 						os2.writeObject("É a sua vez de jogar");
-						os1.writeObject("Aguarde pela jogada do oponente");
-						
 
-						// Receive row and column from player 2
+						
+						// Recebe a linha e a coluna da jogada do jogador 2
 				        int row = (int) is2.readObject();
 				        int col = (int) is2.readObject();
 				        
@@ -215,7 +277,6 @@ class HandleConnectionThread extends Thread {
 				            
 				            os2.writeObject("Jogou na linha " + row + " e na coluna "+  col);
 				            os1.writeObject("Oponente jogou na linha " + row + " e na coluna "+  col);
-				            System.out.println("valid play 2");
 
 				        } else {
 				            // If invalid, ask for another input
