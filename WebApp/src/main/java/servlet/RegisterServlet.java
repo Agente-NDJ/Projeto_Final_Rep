@@ -1,25 +1,27 @@
-package main.java.servlet;
-
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import main.java.database.BCrypt;
-import main.java.database.Configura;
-import main.java.database.Manipula;
+package servlet;
 
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import database.BCrypt;
+import database.Configura;
+import database.Manipula;
 
 
-@WebServlet("/RegisterServlet")
+@WebServlet("/Register")
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		Manipula dados = new Manipula(new Configura());
 		
 		String nome = request.getParameter("nome");
@@ -30,6 +32,8 @@ public class RegisterServlet extends HttpServlet {
 			
 		String erro = "";
 		request.setAttribute("erro", erro);
+		
+		System.out.println("ENTROU");
 		
 		try {
 			if(usernameExists(dados, username)) {
@@ -45,12 +49,16 @@ public class RegisterServlet extends HttpServlet {
 				getServletContext().getRequestDispatcher("/register.jsp").forward(request, response);
 			}
 				
-
 			else {
 				
 				String hash_password = BCrypt.hashpw(password, BCrypt.gensalt());
+				
+				System.out.println("nome: " + nome);
+				System.out.println("username: " + username);
+				System.out.println("password: " + password);
+				System.out.println("hash: " + hash_password);
 					
-				dados.xDirectiva("insert into projetoFinal.jogador(nome, username, hash_password) values" +
+				dados.xDirectiva("insert into jogador(nome, username, hash_password) values" +
 						"('"+nome+"', '"+username+"', '"+hash_password+"');");
 			}
 		} catch (SQLException e) {
@@ -63,16 +71,46 @@ public class RegisterServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
+		HttpSession session=request.getSession();
+		int id = getIdFromPlayer(dados, username);
+		
 		dados.desligar();
-		response.setContentType("text/html; charset=ISO-8859-1");
+		session.setAttribute("username", username);
+        session.setAttribute("id", id);
+		response.setContentType("text/html; charset=ISO-8859-1");		
 		getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
 	}
 	
     private boolean usernameExists(Manipula dados, String username) throws SQLException {
   
-        ResultSet rs = dados.getResultado("SELECT id FROM projetoFinal.jogador WHERE username = '"+username+"';");
+        ResultSet rs = dados.getResultado("SELECT id FROM jogador WHERE username = '"+username+"';");
         
-        return rs.next();
+        if(rs != null && rs.next()) {
+        	return true;
+        }
+        
+        return false;
+    }
+    
+    private int getIdFromPlayer(Manipula dados, String username) {
+
+    	int id = -1;
+    	
+        ResultSet rs = dados.getResultado("SELECT id FROM ProjetoFinal.jogador"
+                + " WHERE username = '" + username + "';");
+
+        try {
+            while(rs!=null && rs.next()) {
+                id = rs.getInt("id");
+            }
+
+        } catch (SQLException e) {
+            
+            e.printStackTrace();
+        }
+
+        dados.desligar();
+        return id;
     }
 }

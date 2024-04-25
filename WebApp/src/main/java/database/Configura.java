@@ -1,4 +1,4 @@
-package main.java.database;
+package database;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -35,7 +35,7 @@ public class Configura {
 
 	/* Configuração para o MySQL8 com JDBC tipo 4 */
 
-	private String database = "ProjetoFinal";
+	private String database = "projetofinal";
 	private String usr = "root";
 	private String pwd = "123456789";
 	private String serverName = "localhost";  //"pfhp7";

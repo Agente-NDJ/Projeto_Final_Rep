@@ -29,7 +29,7 @@
   display: flex;
   align-items: center;
   flex-direction: row;
-  justify-content: flex-start; /* Align text to the left */
+  justify-content: center;
 }
 .register-text {
   margin-left: var(--dl-space-space-twounits);
@@ -84,19 +84,6 @@
   align-items: center;
   margin-bottom: var(--dl-space-space-threeunits);
   justify-content: space-between;
-}
-
-.register-button {
-  left: 205px;
-  bottom: 12px;
-  position: absolute;
-  transition: background-color 0.3s; /* Add transition for smooth effect */
-}
-
-/* Hover effect */
-.register-button:hover {
-  background-color: rgba(0, 0, 0, 0.3); /* Change background color on hover */
-  cursor: pointer;
 }
 .register-logo {
   height: 2rem;

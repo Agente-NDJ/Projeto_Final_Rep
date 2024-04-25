@@ -150,10 +150,10 @@
                     </div>
                 </div>
             </header>
-            <form method="POST" action="RegisterServlet" class="register-form">
-                <input id="name" type="text" placeholder="Name" class="register-textinput2 input" />
-                <input id="username" type="text" placeholder="Username" class="register-textinput input" />
-                <input id="password" type="password" placeholder="Password" class="register-textinput1 input" /> 
+            <form method="POST" action="Register" class="register-form">
+                <input name="nome" id="name" type="text" placeholder="Name" class="register-textinput2 input" />
+                <input name="username" id="username" type="text" placeholder="Username" class="register-textinput input" />
+                <input name="password" id="password" type="password" placeholder="Password" class="register-textinput1 input" /> 
                 <button type="submit" class="register-button button">Register</button>
             </form>
         </div>

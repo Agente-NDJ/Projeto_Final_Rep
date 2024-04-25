@@ -61,11 +61,11 @@
                     if (username != null) {
                 %>
                     <!-- Display the username if logged in -->
-                    <div>Welcome, <%= username %>!</div>
+                    <a> Welcome, <%= username %>!</a>
                     <!-- Create a logout button -->
-	                <form action="LogoutServlet" method="get">
-	                    <button type="submit">Logout</button>
-	                </form>
+                    <a href="LogoutServlet">
+                    	<button class="home-login button">Logout</button>
+                    </a>
                 <% } else { %>
                     <!-- Display login and register buttons if not logged in -->
                     <div class="home-buttons">

@@ -1,18 +1,21 @@
-package main.java.servlet;
+package servlet;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import main.java.database.Configura;
-import main.java.database.Manipula;
-import main.java.server.Login;
+
 
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import database.Configura;
+import database.Manipula;
+import server.Login;
 
 
 @WebServlet("/LoginServlet")
@@ -22,11 +25,35 @@ public class LoginServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
+    	Manipula dados = new Manipula(new Configura());
+    	
         String username = request.getParameter("username");
+        
         String password = request.getParameter("password");
-        int id = -1;
-        Manipula dados = new Manipula(new Configura());
+        
+        System.out.print(username);
+        System.out.print(password);
+        
+        int id = getIdFromPlayer(dados, username);
 
+        HttpSession session=request.getSession();
+
+        if(username != null && password != null && Login.login(username, password) && id >= 0) {
+            // Store username in session
+            session.setAttribute("username", username);
+            session.setAttribute("id", id);
+            // Forward to the home page
+            request.getRequestDispatcher("/index.jsp").forward(request, response);
+        } else {
+            // If login fails, forward back to the login page
+            request.getRequestDispatcher("/login.jsp").forward(request, response);
+        }
+    }
+    
+    private int getIdFromPlayer(Manipula dados, String username) {
+
+    	int id = -1;
+    	
         ResultSet rs = dados.getResultado("SELECT id FROM ProjetoFinal.jogador"
                 + " WHERE username = '" + username + "';");
 
@@ -41,19 +68,6 @@ public class LoginServlet extends HttpServlet {
         }
 
         dados.desligar();
-
-        
-        HttpSession session=request.getSession();
-
-        if(username != null && password != null && Login.login(username, password) && id >= 0) {
-            // Store username in session
-            session.setAttribute("username", username);
-            session.setAttribute("id", id);
-            // Forward to the home page
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
-        } else {
-            // If login fails, forward back to the login page
-            request.getRequestDispatcher("/login.jsp").forward(request, response);
-        }
+        return id;
     }
 }

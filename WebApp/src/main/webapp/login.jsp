@@ -109,8 +109,8 @@
                 ></path></svg></div></div></header>
                 
         <form action="LoginServlet" method="POST" class="login-form">
-		    <input id="username" type="text" placeholder="Username" class="login-textinput input" />
-		    <input id="password" type="password" placeholder="Password" class="login-textinput1 input" />
+		    <input name="username" id="username" type="text" placeholder="Username" class="login-textinput input" />
+		    <input name="password" id="password" type="password" placeholder="Password" class="login-textinput1 input" />
 		    <button type="submit" class="login-button button">Login</button>
 		</form>
     </div>

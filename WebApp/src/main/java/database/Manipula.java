@@ -1,4 +1,4 @@
-package main.java.database;
+package database;
 
 import java.math.BigDecimal;
 import java.sql.BatchUpdateException;

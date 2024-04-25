@@ -1,25 +1,28 @@
-package server;
+package testes;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import database.BCrypt;
 import database.Configura;
 import database.Manipula;
-import database.BCrypt;
 
-public class Login {
+public class TesteBD {
 	
-	public static boolean login(String username, String password) {
-		
+	public static void main(String[] args) {
 		Manipula dados = new Manipula(new Configura());
+		
+		String username = "d";
 
-		ResultSet rs = dados.getResultado("SELECT hash_password FROM jogador"
+		ResultSet rs = dados.getResultado("SELECT hash_password FROM projetoFinal.jogador"
 				+ " WHERE username = '" + username + "';");
+		
 		String hash = "";
 
 		try {
 			while(rs!=null && rs.next()) {
 				hash = rs.getString("hash_password");
-            }
+	        }
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -28,11 +31,14 @@ public class Login {
 		
 		dados.desligar();
 		
+		System.out.println("hash: " + hash);
 		
-		if(BCrypt.checkpw(password, hash)) {
-			return true;
+		
+		if(BCrypt.checkpw("aaa", hash)) {
+			System.out.println("Entrou");
 		}
-		
-		return false;
 	}
+	
+
+
 }

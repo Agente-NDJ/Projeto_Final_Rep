@@ -1,4 +1,4 @@
-package main.java.server;
+package server;
 
 public class JogoGalo {
 
@@ -47,10 +47,7 @@ public class JogoGalo {
     	}
     	
     	if(checkValidPlay(row, col)) {
-    	
-	        System.out.println("row :" + row);
-	        System.out.println("col :" + col);
-	        
+
 	        board.registerPlay(row, col, player);
 	        empty--;
 	        return true;
