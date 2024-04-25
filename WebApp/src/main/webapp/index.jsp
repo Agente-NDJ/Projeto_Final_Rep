@@ -51,7 +51,7 @@
           ><div data-thq="thq-navbar-nav" class="home-desktop-menu"
             ><nav class="home-links"
               ><a class="home-text" href="index.jsp">Home</a
-              ><a class="home-text1" href="index.jsp">Leaderboard</a
+              ><a class="home-text1" href="leaderboard.jsp">Leaderboard</a
               ><a class="home-text2" href="index.jsp">Estarolas</a
               ><a class="home-text3" href="index.jsp">About us</a>
               </nav>

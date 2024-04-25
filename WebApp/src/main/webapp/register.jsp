@@ -97,7 +97,7 @@
                 <div data-thq="thq-navbar-nav" class="register-desktop-menu">
                     <nav class="register-links">
                         <a class="register-text" href="index.jsp">Home</a>
-                        <a class="register-text1" href="index.jsp">Leaderboard</a>
+                        <a class="register-text1" href="leaderboard.jsp">Leaderboard</a>
                         <a class="register-text2" href="index.jsp">Estarolas</a>
                         <a class="register-text3" href="index.jsp">About us</a>
                     </nav>
