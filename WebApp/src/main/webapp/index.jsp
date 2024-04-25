@@ -78,13 +78,8 @@
                     </div>
                 <% } %>
             </div>
-            <!-- Burger Menu -->
-            <div class="home-burger-menu">
-                <svg viewBox="0 0 1024 1024" class="home-icon">
-                    <!-- Burger Menu Icon -->
-                </svg>
             </div>
-        </nav>
+            </div>
     </header>
 
     <!-- Main Content Section -->

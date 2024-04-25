@@ -66,34 +66,10 @@
               	<a href="register.jsp"		
               		<button class="button">Register</button></a>
              </div>
-            <div data-thq="thq-burger-menu" class="login-burger-menu"
-            ><svg viewBox="0 0 1024 1024" class="login-icon">
-              <path
-                d="M128 554.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 298.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 810.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667z"
-              ></path></svg></div
-          ><div data-thq="thq-mobile-menu" class="login-mobile-menu"
-            ><div class="login-nav"
-              ><div class="login-top"
-                ><img
-                  alt="image"
-                  src="https://presentation-website-assets.teleporthq.io/logos/logo.png"
-                  class="login-logo" /><div
-                  data-thq="thq-close-menu"
-                  class="login-close-menu"
-                   <svg viewBox="0 0 1024 1024" class="login-icon02">
-                    <path
-                      d="M810 274l-238 238 238 238-60 60-238-238-238 238-60-60 238-238-238-238 60-60 238 238 238-238z"
-                    ></path></svg></div></div
-              ><nav class="login-links1"
-                ><span class="login-text4">About</span
-                ><span class="login-text5">Features</span
-                ><span class="login-text6">Pricing</span
-                ><span class="login-text7">Team</span
-                ><span class="login-text8">Blog</span></nav
-              ><div class="login-buttons1"
-                ><button class="login-login1 button">Login</button
-                ><button class="button">Register</button></div
-              ></div></header>
+             </div>
+             </div>
+             </div>
+             </header>
         
     </div>
     <script
