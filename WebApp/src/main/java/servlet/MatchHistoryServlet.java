@@ -24,6 +24,12 @@ public class MatchHistoryServlet extends HttpServlet {
 		
 		HttpSession session = request.getSession(true);
 		
+		if (session == null || session.getAttribute("id") == null || session.getAttribute("nome") == null) {
+	        // If session doesn't exist or if username and ID are not in the session, redirect to index.jsp
+	        response.sendRedirect("index.jsp");
+	        return; // End the method here to prevent further execution
+	    }
+		
 		Manipula dados = new Manipula(new Configura());
 		
 		int user_id = (int) session.getAttribute("id");
