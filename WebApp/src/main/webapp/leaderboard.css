@@ -36,9 +36,7 @@ nav a {
     padding-top: 50px; /* Add padding to move content down */
 }
 
-
-
-
+/* Button styles */
 .button {
     background-color: #fff;
     color: #000;
@@ -68,6 +66,9 @@ nav a {
     width: 80%;
     margin-top: 50px;
     border-collapse: collapse;
+    border-radius: 10px; /* Rounded corners */
+    overflow: hidden; /* Ensure rounded corners are applied */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
 }
 
 .match-table th, .match-table td {
@@ -80,14 +81,6 @@ nav a {
     background-color: #f2f2f2;
 }
 
-.match-table tr:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-}
-
-.match-table td:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-}
-
-.match-table th:hover {
-    background-color: rgba(0, 0, 0, 0.2);
+.match-table tr {
+    background-color: rgba(255, 255, 255, 0.7); /* Light background for rows */
 }
