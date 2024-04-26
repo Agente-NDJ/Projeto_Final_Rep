@@ -8,119 +8,42 @@
         response.sendRedirect("index.jsp");
     }
 %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projeto Final - Register</title>
-    <meta property="og:title" content="Register - Required Fruitful Spoonbill" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta charset="utf-8" />
-    <meta property="twitter:card" content="summary_large_image" />
-    <style data-tag="reset-style-sheet">
-        html {
-            line-height: 1.15;
-        }
-        body {
-            margin: 0;
-        }
-        * {
-            box-sizing: border-box;
-            border-width: 0;
-            border-style: solid;
-        }
-        p, li, ul, pre, div, h1, h2, h3, h4, h5, h6, figure, blockquote, figcaption {
-            margin: 0;
-            padding: 0;
-        }
-        button {
-            background-color: transparent;
-        }
-        button, input, optgroup, select, textarea {
-            font-family: inherit;
-            font-size: 100%;
-            line-height: 1.15;
-            margin: 0;
-        }
-        button, select {
-            text-transform: none;
-        }
-        button, [type="button"], [type="reset"], [type="submit"] {
-            -webkit-appearance: button;
-        }
-        button::-moz-focus-inner, [type="button"]::-moz-focus-inner, [type="reset"]::-moz-focus-inner, [type="submit"]::-moz-focus-inner {
-            border-style: none;
-            padding: 0;
-        }
-        button:-moz-focus, [type="button"]:-moz-focus, [type="reset"]:-moz-focus, [type="submit"]:-moz-focus {
-            outline: 1px dotted ButtonText;
-        }
-        a {
-            color: inherit;
-            text-decoration: inherit;
-        }
-        input {
-            padding: 2px 4px;
-        }
-        img {
-            display: block;
-        }
-        html {
-            scroll-behavior: smooth;
-        }
-    </style>
-    <style data-tag="default-style-sheet">
-        html {
-            font-family: Inter;
-            font-size: 16px;
-        }
-        body {
-            font-weight: 400;
-            font-style: normal;
-            text-decoration: none;
-            text-transform: none;
-            letter-spacing: normal;
-            line-height: 1.15;
-            color: var(--dl-color-gray-black);
-            background-color: var(--dl-color-gray-white);
-        }
-    </style>
-    <link rel="stylesheet" href="https://unpkg.com/animate.css@4.1.1/animate.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" data-tag="font" />
-    <link rel="stylesheet" href="https://unpkg.com/@teleporthq/teleport-custom-scripts/dist/style.css" />
+    <link rel="stylesheet" href="register.css">
 </head>
 <body>
-    <link rel="stylesheet" href="./style.css" />
-    <div>
-        <link href="./register.css" rel="stylesheet" />
-        <div class="register-container">
-            <header data-thq="thq-navbar" class="register-navbar-interactive">
-                <div data-thq="thq-navbar-nav" class="register-desktop-menu">
-                    <nav class="register-links">
-                        <a class="register-text" href="index.jsp">Home</a>
-                        <a class="register-text1" href="leaderboard.jsp">Leaderboard</a>
-                        <a class="register-text2" href="index.jsp">Estarolas</a>
-                        <a class="register-text3" href="index.jsp">About us</a>
-                    </nav>
-                    <div class="register-buttons">
-                        <a href="login.jsp">
-                            <button class="register-login button">Login</button>
-                        </a>
-                        <a href="register.jsp">		
-                            <button class="button">Register</button>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            </div>
-            </header>
-            <form method="POST" action="Register" class="register-form">
-                <input name="nome" id="name" type="text" placeholder="Name" class="register-textinput2 input" />
-                <input name="username" id="username" type="text" placeholder="Username" class="register-textinput input" />
-                <input name="password" id="password" type="password" placeholder="Password" class="register-textinput1 input" /> 
-                <button type="submit" class="register-button button">Register</button>
-            </form>
+    <!-- Navbar -->
+    <nav>
+        <div>
+            <a href="index.jsp">Home</a>
+            <a href="MatchHistory">Leaderboard</a>
+            <a href="index.jsp">Estarolas</a>
+            <a href="index.jsp">About us</a>
         </div>
+        <div>
+            <!-- Display login/register buttons -->
+            <a href="login.jsp"><button class="login-button button">Login</button></a>
+            <a href="register.jsp"><button class="register-button button">Register</button></a>
+        </div>
+    </nav>
+
+    <!-- Centered form container -->
+    <div class="form-container">
+        <form action="RegisterServlet" method="POST" class="register-form">
+        	<label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" class="register-input">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username" class="register-input">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" class="register-input">
+            <button type="submit" class="register-button button">Register</button>
+        </form>
     </div>
-    <script defer="" src="https://unpkg.com/@teleporthq/teleport-custom-scripts"></script>
 </body>
 </html>
