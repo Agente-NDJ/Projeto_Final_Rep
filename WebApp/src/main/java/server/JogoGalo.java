@@ -25,6 +25,19 @@ public class JogoGalo {
     	return this.BOARD_SIZE;
     }
     
+    protected char getWinner() {
+    	return this.winner;
+    }
+    
+
+    protected char[][] getBoard() {
+		return this.board.getBoard();
+	}
+    
+    protected void setBoard(char[][] board) {
+		this.board.setBoard(board);
+	}
+    
     // Método que verifica se a jogada introduzida é válida 
     protected boolean checkValidPlay(int row, int col) {
     	

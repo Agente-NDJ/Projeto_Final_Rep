@@ -46,8 +46,32 @@
 
     <!-- Main Content Section: Centered buttons -->
     <div class="buttons-container">
-        <button type="button" class="button">Player vs Player</button>
-        <button type="button" class="button">Player vs AI</button>
-    </div>
+    <a href="PlayerQueueServlet">
+    	<button type="button" id="playerVsPlayerButton" class="button">Player vs Player</button>
+    </a>
+    <button type="button" class="button">Player vs AI</button>
+</div>
+    
+<!-- Waiting message -->
+<div id="waitingMessage" style="display: none; text-align: center;">
+    <p>Waiting for another player to join...</p>
+</div>
+
+<script>
+    document.getElementById("playerVsPlayerButton").addEventListener("click", function() {
+        // Show waiting message
+        document.getElementById("waitingMessage").style.display = "block";
+        
+        // Redirect to PlayerQueueServlet
+        window.location.href = "PlayerQueueServlet";
+    });
+    
+
+    // Check if the game has started (check if redirected to game.jsp)
+    // If the game starts, hide the waiting message
+    if (window.location.pathname.endsWith("game.jsp")) {
+        document.getElementById("waitingMessage").style.display = "none";
+    }
+</script>
 </body>
 </html>

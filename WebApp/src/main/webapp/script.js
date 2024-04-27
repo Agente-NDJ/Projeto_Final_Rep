@@ -87,3 +87,38 @@ function checkWin(currentClass) {
     })
   })
 }
+
+// Update the handleClick function to send player moves to the servlet
+function handleClick(e) {
+    const cell = e.target;
+    const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS;
+    if (!cell.classList.contains(X_CLASS) && !cell.classList.contains(CIRCLE_CLASS)) {
+        placeMark(cell, currentClass);
+        const row = cell.dataset.row;
+        const col = cell.dataset.col;
+        document.getElementById('moveInput').value = `${row},${col}`;
+        sendMoveToServlet();
+    }
+    if (checkWin(currentClass)) {
+        endGame(false);
+    } else if (isDraw()) {
+        endGame(true);
+    } else {
+        swapTurns();
+        setBoardHoverClass();
+    }
+}
+// Function to send player move to the servlet
+function sendMoveToServlet() {
+    const formData = new FormData(document.getElementById('gameForm'));
+    fetch('TicTacToeServlet', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Update game state based on data received from the servlet
+        // Implement this part based on your game logic and data format
+    })
+    .catch(error => console.error('Error:', error));
+}

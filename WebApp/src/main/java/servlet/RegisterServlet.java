@@ -16,7 +16,7 @@ import database.Configura;
 import database.Manipula;
 
 
-@WebServlet("/Register")
+@WebServlet("/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -33,7 +33,6 @@ public class RegisterServlet extends HttpServlet {
 		String erro = "";
 		request.setAttribute("erro", erro);
 		
-		System.out.println("ENTROU");
 		
 		try {
 			if(usernameExists(dados, username)) {

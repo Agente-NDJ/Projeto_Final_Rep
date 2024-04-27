@@ -46,19 +46,23 @@
     </nav>
 
     <div class="board" id="board">
-	    <div class="cell" data-cell></div>
-	    <div class="cell" data-cell></div>
-	    <div class="cell" data-cell></div>
-	    <div class="cell" data-cell></div>
-	    <div class="cell" data-cell></div>
-	    <div class="cell" data-cell></div>
-	    <div class="cell" data-cell></div>
-	    <div class="cell" data-cell></div>
-	    <div class="cell" data-cell></div>
-  </div>
+	    <div class="cell" data-row="0" data-col="0" data-cell></div>
+	    <div class="cell" data-row="0" data-col="1" data-cell></div>
+	    <div class="cell" data-row="0" data-col="2" data-cell></div>
+	    <div class="cell" data-row="1" data-col="0" data-cell></div>
+	    <div class="cell" data-row="1" data-col="1" data-cell></div>
+	    <div class="cell" data-row="1" data-col="2" data-cell></div>
+	    <div class="cell" data-row="2" data-col="0" data-cell></div>
+	    <div class="cell" data-row="2" data-col="1" data-cell></div>
+	    <div class="cell" data-row="2" data-col="2" data-cell></div>
+	</div>
     <div class="winning-message" id="winningMessage">
     	<div data-winning-message-text></div>
     	<button id="exitButton">Exit</button>
     </div>
+    <!-- Form for sending moves to the servlet -->
+    <form id="gameForm" action="PlayServlet" method="post">
+        <input type="hidden" id="moveInput" name="move">
+    </form>
 </body>
 </html>

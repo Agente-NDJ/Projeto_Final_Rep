@@ -24,6 +24,10 @@ class Board {
 		return this.board;
 	}
 	
+	public void setBoard(char[][] board) {
+		this.board = board;
+	}
+	
 	public void registerPlay(int row, int col, char piece) {
 		this.board[row][col] = piece;
 		System.out.println("jogada registada: row="+row+", col ="+col+ "piece=" + piece + "board[row][col]="+piece);

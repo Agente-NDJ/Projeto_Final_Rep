@@ -29,7 +29,7 @@ public class Login {
 		dados.desligar();
 		
 		
-		if(BCrypt.checkpw(password, hash)) {
+		if(!hash.isEmpty() && BCrypt.checkpw(password, hash)) {
 			return true;
 		}
 		
