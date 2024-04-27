@@ -22,11 +22,11 @@
 	ArrayList<String> dates = (ArrayList<String>) request.getAttribute("datas");
 	
 	
-	/* System.out.println("match_ids len: " + match_ids.size());
+	System.out.println("match_ids len: " + match_ids.size());
 	System.out.println("match_ids len: " + games.size());
 	System.out.println("match_ids len: " + opponents.size());
 	System.out.println("match_ids len: " + winners.size());
-	System.out.println("match_ids len: " + dates.size()); */
+	System.out.println("match_ids len: " + dates.size());
 	
 %>
 

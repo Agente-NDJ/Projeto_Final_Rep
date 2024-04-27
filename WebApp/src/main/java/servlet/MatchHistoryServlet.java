@@ -35,9 +35,6 @@ public class MatchHistoryServlet extends HttpServlet {
 		int user_id = (int) session.getAttribute("id");
 		String user_nome = (String) session.getAttribute("nome");
 		
-		System.out.println("session id: " + user_id);
-		System.out.println("session nome: " + user_nome);
-		
 		ResultSet rsMatch = dados.getResultado("SELECT id, jogo_id, jogador2_id, ia_id, tipo_oponente, vencedor, data " + 
 												"FROM ProjetoFinal.historico_jogos WHERE jogador1_id='" + user_id + "';");
 		
