@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -29,23 +30,25 @@ public class RegisterServlet extends HttpServlet {
 		String username = request.getParameter("username");
 		
 		String password = request.getParameter("password");
-			
-		String erro = "";
-		request.setAttribute("erro", erro);
-		
 		
 		try {
 			if(usernameExists(dados, username)) {
-				erro = "Já existe um utilizador com o nome de utilizador introduzido";
-				request.setAttribute("erro", erro);
-				getServletContext().getRequestDispatcher("/register.jsp").forward(request, response);
+				PrintWriter out = response.getWriter();
+	            out.println("<script type=\"text/javascript\">");
+	            out.println("alert('Username already exists');");
+	            out.println("window.location.href = 'register.jsp';");
+	            out.println("</script>");
+	            return; // End the method here to prevent further execution
 
 			}
 			
 			else if(nome.trim().equals("") || username.trim().equals("") || password.trim().equals("")) {
-				erro = "Os dados introduzidos devem conter caractéres diferentes de espaços.";
-				request.setAttribute("erro", erro);
-				getServletContext().getRequestDispatcher("/register.jsp").forward(request, response);
+				PrintWriter out = response.getWriter();
+	            out.println("<script type=\"text/javascript\">");
+	            out.println("alert('The data introduced can't be spaces');");
+	            out.println("window.location.href = 'register.jsp';");
+	            out.println("</script>");
+	            return; // End the method here to prevent further execution
 			}
 				
 			else {
@@ -61,9 +64,6 @@ public class RegisterServlet extends HttpServlet {
 						"('"+nome+"', '"+username+"', '"+hash_password+"');");
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ServletException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {

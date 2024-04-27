@@ -5,6 +5,7 @@ import database.Manipula;
 import server.Login;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -63,8 +64,12 @@ public class LoginServlet extends HttpServlet {
             // Forward to the home page
             request.getRequestDispatcher("/index.jsp").forward(request, response);
         } else {
-            // If login fails, forward back to the login page
-            request.getRequestDispatcher("/login.jsp").forward(request, response);
+        	PrintWriter out = response.getWriter();
+            out.println("<script type=\"text/javascript\">");
+            out.println("alert('Login failed. Incorrect username or password');");
+            out.println("window.location.href = 'login.jsp';");
+            out.println("</script>");
+            return; // End the method here to prevent further execution
         }
     }
 }

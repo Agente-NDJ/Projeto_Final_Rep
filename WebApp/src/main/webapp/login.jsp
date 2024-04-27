@@ -22,7 +22,7 @@
     <nav>
         <div>
             <a href="index.jsp">Home</a>
-            <a href="MatchHistory">Leaderboard</a>
+            <a href="MatchHistory">Match History</a>
             <a href="index.jsp">Estarolas</a>
             <a href="index.jsp">About us</a>
         </div>

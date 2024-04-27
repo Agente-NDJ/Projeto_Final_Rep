@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -26,8 +27,12 @@ public class MatchHistoryServlet extends HttpServlet {
 		
 		if (session == null || session.getAttribute("id") == null || session.getAttribute("nome") == null) {
 	        // If session doesn't exist or if username and ID are not in the session, redirect to index.jsp
-	        response.sendRedirect("index.jsp");
-	        return; // End the method here to prevent further execution
+	        PrintWriter out = response.getWriter();
+            out.println("<script type=\"text/javascript\">");
+            out.println("alert('You need to login first to check the match history');");
+            out.println("window.location.href = 'login.jsp';");
+            out.println("</script>");
+            return; // End the method here to prevent further execution
 	    }
 		
 		Manipula dados = new Manipula(new Configura());
